@@ -9,7 +9,7 @@ class EntropyValueMethod:
         """
         self.df = df
 
-    def standardize(self):
+    def _standardize(self):
         """
         standardize indicator
         """
@@ -19,7 +19,7 @@ class EntropyValueMethod:
         """
         Calculate entropy for each indicator in the dataframe
         """
-        normalized_df = self.standardize()
+        normalized_df = self._standardize()
         normalized_df = normalized_df / normalized_df.sum()
 
         entropy_df = normalized_df * np.log(normalized_df)
@@ -43,7 +43,7 @@ class EntropyValueMethod:
         Calculate scores for each sample in the dataframe
         """
         weights = self.calculate_weights()
-        normalized_df = self.standardize()
+        normalized_df = self._standardize()
         score = pd.Series(weights) * normalized_df
         score = score.sum(axis=1)
         self.score_df = pd.DataFrame({
@@ -61,7 +61,8 @@ if __name__ == '__main__':
     evm = EntropyValueMethod(df)
     # 计算权重
     weights = evm.calculate_weights()
-    # 输出加权得分
+    # # 输出加权得分
     score = evm.calculate_scores()
+    # print(score)
 
 
