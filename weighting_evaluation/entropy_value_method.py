@@ -13,8 +13,7 @@ class EntropyValueMethod:
         """
         standardize indicator
         """
-        normalized_df = (self.df - self.df.min()) / (self.df.max() - self.df.min())
-        return normalized_df
+        return (self.df - self.df.min()) / (self.df.max() - self.df.min())
 
     def calculate_entropy(self):
         """
