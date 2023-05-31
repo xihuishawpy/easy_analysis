@@ -5,4 +5,5 @@ This project plans to integrate some common business analysis methods, applicati
 TO-DO:
 1. Weighting evaluation
 - [x] Entropy value method
+- [ ] PCA method
 - [ ] Shapley value method
