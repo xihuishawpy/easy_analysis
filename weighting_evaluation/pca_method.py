@@ -16,6 +16,8 @@ class PcaMethod():
         pca.fit(normalized_df)
         # 方差解释率
         variance_ratio = pca.explained_variance_ratio_
+        # 特征根(特征根占比 = 方差解释率)
+        roots = pca.explained_variance_
         # 载荷系数
         loadings = pca.components_
 
@@ -24,11 +26,12 @@ class PcaMethod():
         topk_index = np.argwhere( variance_ratio_cum > 0.9 ).min() + 1
 
         main_loading = loadings[:,:topk_index] # 主成分
-        main_root = variance_ratio[:topk_index] * 10 # 对应特征根
+        main_root = roots[:topk_index] # 对应特征根
         return main_loading, main_root
 
     def calculate_weights(self):
         main_loading, main_root = self.main_component()
+        # 线性组合系数
         linear_coef = main_loading / np.sqrt(main_root)
         main_root_cum = (main_root * 10).sum()
         # 计算综合得分、权重
@@ -38,9 +41,10 @@ class PcaMethod():
 
 
 if __name__ == '__main__':
-    df = pd.read_excel('../test_data/test_entropy_value_method.xlsx',index_col=0)
+    df = pd.read_csv('../test_data/test_pca_method.csv')
 
     pcam = PcaMethod(df)
     # 计算权重
     weights = pcam.calculate_weights()
+    print(weights)
 
